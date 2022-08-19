@@ -12,26 +12,28 @@ declare global {
 }
 
 //nextjs에서는 서버 사이드 렌더링때문에 document를 인식 못해서 아래와 같은 조건문 처리 해줌
-if(typeof window === 'object') {
-    const mapScript = document.createElement("script");
+ueeEffect(() => {
+  if(typeof window === 'object') {
+      const mapScript = document.createElement("script");
 
-    mapScript.async = true;
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=0554e7e17897ae59919e5f364fc2abc8&autoload=false`;
+      mapScript.async = true;
+      mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=JavascriptAPIKey&autoload=false`;
 
-    document.head.appendChild(mapScript);
+      document.head.appendChild(mapScript);
 
-    const onLoadKakaoMap = () => {
-      window.kakao.maps.load(() => {
-        const mapContainer = document.getElementById("map");
-        const mapOption = {
-          center: new window.kakao.maps.LatLng(35.99143, 129.21628), // 지도의 중심좌표, (Y, X)값임, x/y가 아님
-          level: 3, // 지도의 확대 레벨
-        };
-        new window.kakao.maps.Map(mapContainer, mapOption);
-      });
-    };
-    mapScript.addEventListener("load", onLoadKakaoMap);
-  }
+      const onLoadKakaoMap = () => {
+        window.kakao.maps.load(() => {
+          const mapContainer = document.getElementById("map");
+          const mapOption = {
+            center: new window.kakao.maps.LatLng(35.99143, 129.21628), // 지도의 중심좌표, (Y, X)값임, x/y가 아님
+            level: 3, // 지도의 확대 레벨
+          };
+          new window.kakao.maps.Map(mapContainer, mapOption);
+        });
+      };
+      mapScript.addEventListener("load", onLoadKakaoMap);
+    }
+ }, [])
 
 return (
 ...
